@@ -28,6 +28,7 @@
 
 #include <concepts>
 #include <variant>
+#include <optional>
 #include "core/core.h"
 
 namespace bfs {
@@ -35,6 +36,7 @@ namespace bfs {
 struct PresConfig {
   std::variant<TwoWire *, SPIClass *> bus;
   int8_t dev;
+  std::optional<int8_t> transducer;
   int16_t sampling_period_ms;
 };
 struct PresData {

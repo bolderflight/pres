@@ -43,7 +43,10 @@ This library is within the namespace *bfs*.
 | --- | --- |
 | std::variant<TwoWire &ast;, SPIClass &ast;> bus | A pointer to the interface used to the communicate with the sensor |
 | int8_t dev | The I2C address or SPI pin |
+| std::optional<int8_t> transducer | (optional) The pressure transducer |
 | int16_t sampling_period_ms | The sampling period for the sensor, used to determine sensor health |
+
+Some sensor drivers, such as the AMS5915 or AMS5812, need the pressure transducer specified to set the appropriate pressure ranges. The optional transducer parameter is available for that purpose.
 
 **struct PresData** defines a structure of data returned from the sensor. The data fields are:
 
