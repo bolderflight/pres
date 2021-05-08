@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.0
+- Re-ordered config struct to optimize packing
+- Added die_temp_c data member
+
 ## v1.1.0
 - Added pressure transducer config data member
 
