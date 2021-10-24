@@ -28,17 +28,17 @@
 /* Example class compiant with the Pres interface */
 class PresExample {
  public:
-  bool Init(const bfs::PresConfig &ref) {}
-  bool Read(bfs::PresData * const ptr) {}
+  bool Config(const bfs::PresConfig &ref) {}
+  bfs::PresData pres_data() {}
 };
 
 /* Checking that the PresExample class meets the requirements of bfs::Pres */
 static_assert(bfs::Pres<PresExample>,
-  "IMU example should conform to the IMU interface");
+  "Pres example should conform to the pressure interface");
 
 /* Function that is templated against the Pres interface */
 template<bfs::Pres T>
-bool InitImu(T pres, const bfs::PresConfig &config) {
+bool InitPres(T pres, const bfs::PresConfig &config) {
   return pres.Init(config);
 }
 

@@ -17,20 +17,11 @@ CMake is used to build this library, which is exported as a library target calle
 The library can be also be compiled stand-alone using the CMake idiom of creating a *build* directory and then, from within that directory issuing:
 
 ```
-cmake .. -DMCU=MK66FX1M0
+cmake ..
 make
 ```
 
-This will build the library and an example called *example*, which has source code located in *examples/example.cc*. Notice that the *cmake* command includes a define specifying the microcontroller the code is being compiled for. This is required to correctly configure the code, CPU frequency, and compile/linker options. The available MCUs are:
-   * MK20DX128
-   * MK20DX256
-   * MK64FX512
-   * MK66FX1M0
-   * MKL26Z64
-   * IMXRT1062_T40
-   * IMXRT1062_T41
-
-These are known to work with the same packages used in Teensy products. Also switching packages is known to work well, as long as it's only a package change.
+This will build the library and an example called *example*, which has source code located in *examples/example.cc*.
 
 ## Namespace
 This library is within the namespace *bfs*.
@@ -41,10 +32,7 @@ This library is within the namespace *bfs*.
 
 | Name | Description |
 | --- | --- |
-| std::variant<TwoWire &ast;, SPIClass &ast;> bus | A pointer to the interface used to the communicate with the sensor |
-| int8_t dev | The I2C address or SPI pin |
 | std::optional<int8_t> transducer | (optional) The pressure transducer |
-| int16_t sampling_period_ms | The sampling period for the sensor, used to determine sensor health |
 
 Some sensor drivers, such as the AMS5915 or AMS5812, need the pressure transducer specified to set the appropriate pressure ranges. The optional transducer parameter is available for that purpose.
 
@@ -58,8 +46,8 @@ Some sensor drivers, such as the AMS5915 or AMS5812, need the pressure transduce
 
 Health is determined by whether the sensor fails to read 5 times in a row at the expected sampling rate.
 
-**Pres** Concepts are used to define what a *Pres* compliant object looks like and provide a means to templating against a *Pres* interface. The two required methods are:
+**Pres** Concepts are used to define what a *Pres* compliant object looks like and provide a means to templating against a *Pres* interface. The required methods are:
 
-**bool Init(const PresConfig &ref)** This method should receive an *PresConfig* struct and should establish communication with the pressure sensor, configure the sensor, and zero biases. True is returned on successfully initializing the sensor.
+**bool Config(const PresConfig &ref)** This method should receive a PresConfig struct and setup the sensor driver configuration. Note that the configuration should be applied in the *Init* method, this simply checks the configuration for validity and sets up the sensor driver object. True is returned if the config is valid, otherwise false if returned.
 
-**bool Read(PresData &ast; const ptr)** This method should get new data from the sensor and return it using a pointer to the *PresData* struct. True is returned if new data is received.
+**PresData pres_data()** This method returns the PresData from the last successful *Read*.
