@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.0.0
+- Removed device config items, since they are now in the Sensors interface
+
 ## v1.2.0
 - Re-ordered config struct to optimize packing
 - Added die_temp_c data member

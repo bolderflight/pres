@@ -27,17 +27,13 @@
 #define INCLUDE_PRES_PRES_H_
 
 #include <concepts>
-#include <variant>
 #include <optional>
-#include "core/core.h"
+#include <cstdint>
 
 namespace bfs {
 
 struct PresConfig {
-  int8_t dev;
   std::optional<int8_t> transducer;
-  int16_t sampling_period_ms;
-  std::variant<TwoWire *, SPIClass *> bus;
 };
 struct PresData {
   bool new_data;
@@ -47,9 +43,9 @@ struct PresData {
 };
 
 template<typename T>
-concept Pres = requires(T pres, const PresConfig &ref, PresData * const ptr) {
-  { pres.Init(ref) } -> std::same_as<bool>;
-  { pres.Read(ptr) } -> std::same_as<bool>;
+concept Pres = requires(T pres, const PresConfig &ref) {
+  { pres.Config(ref) } -> std::same_as<bool>;
+  { pres.pres_data() } -> std::same_as<PresData>;
 };  // NOLINT - gets confused with concepts and semicolon after braces
 
 }  // namespace bfs
