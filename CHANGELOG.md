@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.0.0
+- Removed transducer config, since that is now in the Sensors interface
+
 ## v2.0.0
 - Removed device config items, since they are now in the Sensors interface
 

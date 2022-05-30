@@ -1,4 +1,8 @@
-# pres
+[![Pipeline](https://gitlab.com/bolderflight/software/pres/badges/main/pipeline.svg)](https://gitlab.com/bolderflight/software/pres/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+![Bolder Flight Systems Logo](img/logo-words_75.png)
+
+# Pres
 Defines a common interface for our pressure sensors
    * [License](LICENSE.md)
    * [Changelog](CHANGELOG.md)
@@ -28,14 +32,6 @@ This library is within the namespace *bfs*.
 
 ## Class / Methods
 
-**struct PresConfig** defines a structure used to configure the sensor. The data fields are:
-
-| Name | Description |
-| --- | --- |
-| std::optional<int8_t> transducer | (optional) The pressure transducer |
-
-Some sensor drivers, such as the AMS5915 or AMS5812, need the pressure transducer specified to set the appropriate pressure ranges. The optional transducer parameter is available for that purpose.
-
 **struct PresData** defines a structure of data returned from the sensor. The data fields are:
 
 | Name | Description |
@@ -47,7 +43,5 @@ Some sensor drivers, such as the AMS5915 or AMS5812, need the pressure transduce
 Health is determined by whether the sensor fails to read 5 times in a row at the expected sampling rate.
 
 **Pres** Concepts are used to define what a *Pres* compliant object looks like and provide a means to templating against a *Pres* interface. The required methods are:
-
-**bool Config(const PresConfig &ref)** This method should receive a PresConfig struct and setup the sensor driver configuration. Note that the configuration should be applied in the *Init* method, this simply checks the configuration for validity and sets up the sensor driver object. True is returned if the config is valid, otherwise false if returned.
 
 **PresData pres_data()** This method returns the PresData from the last successful *Read*.

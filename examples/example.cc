@@ -2,7 +2,7 @@
 * Brian R Taylor
 * brian.taylor@bolderflight.com
 * 
-* Copyright (c) 2021 Bolder Flight Systems Inc
+* Copyright (c) 2022 Bolder Flight Systems Inc
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the “Software”), to
@@ -28,7 +28,6 @@
 /* Example class compiant with the Pres interface */
 class PresExample {
  public:
-  bool Config(const bfs::PresConfig &ref) {}
   bfs::PresData pres_data() {}
 };
 
@@ -38,8 +37,8 @@ static_assert(bfs::Pres<PresExample>,
 
 /* Function that is templated against the Pres interface */
 template<bfs::Pres T>
-bool InitPres(T pres, const bfs::PresConfig &config) {
-  return pres.Init(config);
+bfs::PresData ReadPres(T pres) {
+  return pres.pres_data();
 }
 
 int main() {

@@ -2,7 +2,7 @@
 * Brian R Taylor
 * brian.taylor@bolderflight.com
 * 
-* Copyright (c) 2021 Bolder Flight Systems Inc
+* Copyright (c) 2022 Bolder Flight Systems Inc
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the “Software”), to
@@ -27,14 +27,9 @@
 #define INCLUDE_PRES_PRES_H_
 
 #include <concepts>
-#include <optional>
-#include <cstdint>
 
 namespace bfs {
 
-struct PresConfig {
-  std::optional<int8_t> transducer;
-};
 struct PresData {
   bool new_data;
   bool healthy;
@@ -43,8 +38,7 @@ struct PresData {
 };
 
 template<typename T>
-concept Pres = requires(T pres, const PresConfig &ref) {
-  { pres.Config(ref) } -> std::same_as<bool>;
+concept Pres = requires(T pres) {
   { pres.pres_data() } -> std::same_as<PresData>;
 };  // NOLINT - gets confused with concepts and semicolon after braces
 

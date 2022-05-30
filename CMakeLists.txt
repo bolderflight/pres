@@ -1,33 +1,31 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.14)
 # Project information
 project(Pres
-	VERSION 2.0.0
-	DESCRIPTION "Pressure interface"
-	LANGUAGES CXX
+  VERSION 3.0.0
+  DESCRIPTION "Pressure interface"
+  LANGUAGES CXX
 )
 # Add the library target
 add_library(pres INTERFACE)
 # Setup include directories 
 target_include_directories(pres INTERFACE include/)
-# Compile options
-add_compile_options(
-	$<$<COMPILE_LANGUAGE:CXX>:-std=c++20>
-)
+# Need C++20
+target_compile_options(pres INTERFACE -std=c++20)
 
 # Example if this project is built separately
 if (PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
-	# Add the example target
-	add_executable(example examples/example.cc)
-	# Add the includes
-	target_include_directories(example PUBLIC 
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-		$<INSTALL_INTERFACE:include>
-	)
-	# Link libraries to the example target
-	target_link_libraries(example
-		PRIVATE 
-			pres
-	)
+  # Add the example target
+  add_executable(example examples/example.cc)
+  # Add the includes
+  target_include_directories(example PUBLIC 
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  # Link libraries to the example target
+  target_link_libraries(example
+    PRIVATE 
+      pres
+  )
 endif()
 
 
